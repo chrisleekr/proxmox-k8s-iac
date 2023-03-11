@@ -1,0 +1,2 @@
+---
+nerdctl_version: '{{ lookup("env", "nerdctl_version") or "1.2.1" }}'

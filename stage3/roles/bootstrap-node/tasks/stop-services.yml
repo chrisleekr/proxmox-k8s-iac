@@ -1,0 +1,6 @@
+---
+- name: Stop and disable apparmor service
+  ansible.builtin.systemd:
+    name: apparmor
+    state: stopped
+    enabled: false

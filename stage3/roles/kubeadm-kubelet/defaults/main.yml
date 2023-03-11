@@ -1,0 +1,3 @@
+---
+kubeadm_version: '{{ lookup("env", "kubeadm_version") or "1.26.2" }}'
+kubelet_service_version: '{{ lookup("env", "kubelet_service_version") or "0.4.0" }}'

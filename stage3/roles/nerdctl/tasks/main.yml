@@ -1,0 +1,20 @@
+---
+- name: Check if nerdctl exists
+  ansible.builtin.stat:
+    path: /usr/local/bin/nerdctl
+  register: nerdctl_stat
+
+- name: Download and extract nerdctl
+  when: not nerdctl_stat.stat.exists
+  block:
+    - name: Download nerdctl
+      ansible.builtin.get_url:
+        url: "https://github.com/containerd/nerdctl/releases/download/v{{ nerdctl_version }}/nerdctl-{{ nerdctl_version }}-linux-amd64.tar.gz"
+        dest: /tmp/nerdctl.tar.gz
+        mode: "0644"
+
+    - name: Extract nerdctl
+      ansible.builtin.unarchive:
+        src: /tmp/nerdctl.tar.gz
+        dest: /usr/local/bin/
+        remote_src: true

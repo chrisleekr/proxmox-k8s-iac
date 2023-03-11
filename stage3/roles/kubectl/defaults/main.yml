@@ -1,0 +1,2 @@
+---
+kubectl_version: '{{ lookup("env", "kubectl_version") or "1.26.0" }}'

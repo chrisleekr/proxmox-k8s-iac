@@ -1,0 +1,30 @@
+---
+- name: Define list of packages
+  ansible.builtin.set_fact:
+    packages:
+      - net-tools
+      - socat
+      - conntrack
+      - ipvsadm
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - jq
+
+- name: Check if packages are installed (Errors will be ignored.)
+  ansible.builtin.shell: dpkg-query -s {{ item }} | grep 'install ok installed'
+  register: dpkg_check_item
+  changed_when: dpkg_check_item.rc != 0
+  ignore_errors: true
+  loop: "{{ packages }}"
+
+- name: Set dpkg_check fact from results of package check loop
+  ansible.builtin.set_fact:
+    dpkg_check: "{{ dict(packages | zip(dpkg_check_item.results)) }}"
+
+- name: Install required packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  when: "item not in dpkg_check or (dpkg_check[item].rc != 0)"
+  loop: "{{ packages }}"

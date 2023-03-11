@@ -1,0 +1,12 @@
+---
+- name: Join kubeadm
+  when: not hostvars[groups['primary_nodes'][0]]['kubeadm_join_command']['skipped']
+  block:
+    - name: Run join command
+      ansible.builtin.shell: hostvars[groups['primary_nodes'][0]]['kubeadm_join_command']
+      register: kubeadm_join_command
+      changed_when: kubeadm_join_command.rc != 0
+
+- name: Include copy-kubeconfig role
+  ansible.builtin.include_role:
+    name: copy-kubeconfig

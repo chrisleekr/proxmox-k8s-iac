@@ -1,0 +1,2 @@
+---
+crictl_version: '{{ lookup("env", "crictl_version") or "1.26.0" }}'

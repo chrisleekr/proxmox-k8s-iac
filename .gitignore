@@ -1,0 +1,7 @@
+**/.terraform
+**/terraform.tfstate
+*.tfvars
+.env
+node_modules/
+container/root/.kube
+config

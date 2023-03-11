@@ -1,0 +1,6 @@
+---
+cloud_image_url: https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
+cloud_image_path: /tmp/ubuntu-2204-server-amd64.qcow2
+template_id: 1001
+template_name: ubuntu-2204-cloudinit-template
+template_memory: 4096

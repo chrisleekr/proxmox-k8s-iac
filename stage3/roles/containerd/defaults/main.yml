@@ -1,0 +1,2 @@
+---
+containerd_version: '{{ lookup("env", "containerd_version") or "1.6.19" }}'

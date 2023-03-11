@@ -1,0 +1,33 @@
+---
+- hosts: all
+  name: Set up Kubernetes components
+  pre_tasks:
+    - name: Gather service state information as fact data
+      ansible.builtin.service_facts:
+    # - name: Print service facts
+    #   ansible.builtin.debug:
+    #     var: ansible_facts.services
+  roles:
+    - bootstrap-node
+    - containerd
+    - runc
+    - cni
+    - nerdctl
+    - crictl
+    - kubeadm-kubelet
+    - kubectl
+
+- hosts: primary_nodes
+  name: Set up the first Kubernetes control plane node
+  roles:
+    - init-kubeadm
+
+- hosts: secondary_nodes
+  name: Set up additional Kubernetes control plane nodes
+  roles:
+    - join-kubeadm
+
+- hosts: all
+  name: Perform post-processing tasks after setting up Kubernetes
+  roles:
+    - cilium

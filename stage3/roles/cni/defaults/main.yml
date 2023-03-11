@@ -1,0 +1,2 @@
+---
+cni_version: '{{ lookup("env", "cni_version") or "1.2.0" }}'
