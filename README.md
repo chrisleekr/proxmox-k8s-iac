@@ -102,6 +102,6 @@ Please note that this process has been added to the .bashrc file, and therefore 
 
 ## Todo
 
-[ ] CI to validate/lint code
-[ ] Support upgrade
-[ ] Add Terraform to deploy some helm charts
+- [ ] CI to validate/lint code
+- [ ] Support upgrade
+- [ ] Add Terraform to deploy some helm charts
