@@ -1,12 +1,12 @@
 locals {
-  worker_names   = formatlist("k8s-%s.cluster", range(0, var.proxmox_nodes))
+  worker_names   = formatlist("k8s-%s", range(0, var.proxmox_nodes))
   worker_ips     = formatlist("192.168.1.15%s", range(0, var.proxmox_nodes))
   worker_gateway = "192.168.1.1"
 }
 
 resource "proxmox_vm_qemu" "worker_nodes" {
   count = var.proxmox_nodes
-  name  = local.worker_names[count.index]
+  name  = "${local.worker_names[count.index]}.cluster"
   #  The name of the Proxmox Node on which to place the VM.
   target_node = "homelab-pve"
   desc        = "HomeLab Kubernetes node"
