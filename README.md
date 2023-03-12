@@ -18,7 +18,11 @@ This project aims to provision Kubernetes on a Proxmox server and consists of th
 
   This stage involves bootstrapping Kubernetes clusters by following the steps outlined in ["Bootstrapping clusters with kubeadm"](<https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/>).
 
-## Prerequisite
+## Demonstration
+
+[![Proxmox + Kubernetes Infrastructure as a Code](https://asciinema.org/a/gG8ye65pLV2opFgFxhj8mUI4d.svg)](https://asciinema.org/a/gG8ye65pLV2opFgFxhj8mUI4d)
+
+## Prerequisites
 
 1. Set up Terraform Cloud and create an API key.
     - Please make sure to configure the execution mode as Local in Terraform Cloud.
