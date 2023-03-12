@@ -6,18 +6,22 @@
 
 This project aims to provision Kubernetes on a Proxmox server and consists of three stages:
 
-- Stage 1: Ansible
-  In this stage, a VM template is prepared for use on the Proxmox server. Additionally, SSH is configured for the Proxmox server.
+- **Stage 1: Ansible**
 
-- Stage 2: Terraform
+  In this stage, a VM template is prepared for use on the Proxmox server. Additionally, SSH will be configured with the user for the Proxmox server.
+
+- **Stage 2: Terraform**
+
   This stage involves launching servers for Kubernetes nodes. Once provisioning is complete, Terraform generates an `inventory.yml` file for use in Stage 3.
 
-- Stage 3: Ansible
+- **Stage 3: Ansible**
+
   This stage involves bootstrapping Kubernetes clusters by following the steps outlined in ["Bootstrapping clusters with kubeadm"](<https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/>).
 
 ## Prerequisite
 
 1. Set up Terraform Cloud and create an API key.
+    - Please make sure to configure the execution mode as Local in Terraform Cloud.
 
 2. Install Proxmox on a server.
 
@@ -58,7 +62,7 @@ This project aims to provision Kubernetes on a Proxmox server and consists of th
     ```bash
     $ npm run docker:exec
     /srv# cd stage2
-    /srv/stage2# terraform workspace select <workspace name>
+    /srv/stage2# terraform workspace select proxmox-k8s-iac
     /srv/stage2# terraform init
     ```
 

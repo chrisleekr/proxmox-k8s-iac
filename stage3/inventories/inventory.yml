@@ -1,12 +1,15 @@
 all:
   hosts:
     k8s-0.cluster:
+      alias: k8s-0
       ansible_host: 192.168.1.150
       ansible_user: ubuntu
     k8s-1.cluster:
+      alias: k8s-1
       ansible_host: 192.168.1.151
       ansible_user: ubuntu
     k8s-2.cluster:
+      alias: k8s-2
       ansible_host: 192.168.1.152
       ansible_user: ubuntu
   children:

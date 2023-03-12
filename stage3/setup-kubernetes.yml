@@ -9,25 +9,26 @@
     #     var: ansible_facts.services
   roles:
     - bootstrap-node
-    - containerd
-    - runc
-    - cni
-    - nerdctl
-    - crictl
-    - kubeadm-kubelet
-    - kubectl
+    - install-runc
+    - install-cni
+    - configure-containerd
+    - install-nerdctl
+    - install-crictl
+    - configure-kubeadm-kubelet
+    - install-kubectl
+    - download-cilium
 
 - hosts: primary_nodes
-  name: Set up the first Kubernetes control plane node
+  name: Initialize Kubernetes control plane on primary node
   roles:
     - init-kubeadm
 
 - hosts: secondary_nodes
-  name: Set up additional Kubernetes control plane nodes
+  name: Join Kubernetes control plane on secondary nodes
   roles:
     - join-kubeadm
 
-- hosts: all
+- hosts: primary_nodes
   name: Perform post-processing tasks after setting up Kubernetes
   roles:
-    - cilium
+    - install-cilium

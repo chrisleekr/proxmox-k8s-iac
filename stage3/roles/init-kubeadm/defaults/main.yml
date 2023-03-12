@@ -1,1 +1,2 @@
 ---
+node_count: '{{ lookup("env", "node_count") or "3" }}'

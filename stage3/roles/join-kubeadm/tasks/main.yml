@@ -1,11 +1,28 @@
 ---
+- name: Print kubeadm_join_command
+  ansible.builtin.debug:
+    var: hostvars[groups['primary_nodes'][0]]['kubeadm_join_command']
+
+- name: Check if node joined to the cluster
+  ansible.builtin.shell: |
+    set -o pipefail
+    kubectl get node | grep -q "{{ hostvars[inventory_hostname]['alias'] }}"
+  register: node_exists
+  failed_when: false
+  changed_when: false
+
 - name: Join kubeadm
-  when: not hostvars[groups['primary_nodes'][0]]['kubeadm_join_command']['skipped']
+  when:
+    - node_exists.rc != 0
+    - hostvars[groups['primary_nodes'][0]]['kubeadm_join_command'] is defined
+    - >-
+      hostvars[groups['primary_nodes'][0]]['kubeadm_join_command']['skipped'] is not defined or
+      not hostvars[groups['primary_nodes'][0]]['kubeadm_join_command']['skipped']
   block:
     - name: Run join command
-      ansible.builtin.shell: hostvars[groups['primary_nodes'][0]]['kubeadm_join_command']
-      register: kubeadm_join_command
-      changed_when: kubeadm_join_command.rc != 0
+      ansible.builtin.command: "{{ hostvars[groups['primary_nodes'][0]]['kubeadm_join_command'].stdout }}"
+      register: kubeadm_join_command_execute
+      changed_when: kubeadm_join_command_execute.rc != 0
 
 - name: Include copy-kubeconfig role
   ansible.builtin.include_role:
